@@ -45,10 +45,14 @@ const ShoeCard = ({
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price style={{
+            '--text-decoration': variant === 'on-sale' ? 'line-through' : undefined,
+            '--color': variant === 'on-sale' ? COLORS.gray[700] : undefined,
+          }}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {variant === "on-sale" && <SalePrice>{formatPrice(salePrice)}</SalePrice> }
         </Row>
       </Wrapper>
     </Link>
@@ -70,6 +74,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
@@ -85,7 +90,10 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: var(--text-decoration);
+  color: var(--color);
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
@@ -101,16 +109,16 @@ const Flag = styled.span`
   background-color: var(--flag-color);
   position: absolute;
   top: 0;
-  right: 0px;
+  right: 0;
   line-wrapping: nowrap;
+  line-height: 32px;
   color: ${COLORS.white};
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 3px;
-  padding-bottom: 11px;
+  padding: 0 10px;
   margin-top: 12px;
   margin-right: -4px;
   border-radius: 2px;
+  font-size: ${14 / 16}rem;
+  font-weight: ${WEIGHTS.bold};
 `;
 
 export default ShoeCard;
